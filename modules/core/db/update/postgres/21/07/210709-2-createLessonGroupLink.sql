@@ -1,0 +1,2 @@
+alter table SCHEDULE_LESSON_GROUP_LINK add constraint FK_LESGRO_ON_LESSON foreign key (LESSON_ID) references SCHEDULE_LESSON(ID);
+alter table SCHEDULE_LESSON_GROUP_LINK add constraint FK_LESGRO_ON_GROUP foreign key (GROUP_ID) references SCHEDULE_GROUP(ID);

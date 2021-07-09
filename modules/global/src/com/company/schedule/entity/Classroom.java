@@ -22,12 +22,9 @@ public class Classroom extends StandardEntity {
     @Column(name = "TYPE_", nullable = false)
     private Integer type;
 
-    @NumberFormat(pattern = "000")
-    @NotNull
     @Column(name = "NUMBER_", nullable = false, unique = true)
-    @Positive
-    @Max(999)
-    private Integer number;
+    @NotNull
+    private String number;
 
     @NumberFormat(pattern = "0")
     @NotNull
@@ -36,6 +33,14 @@ public class Classroom extends StandardEntity {
     @Max(6)
     @Positive
     private Integer size;
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getNumber() {
+        return number;
+    }
 
     public void setType(ClassroomType type) {
         this.type = type == null ? null : type.getId();
@@ -47,14 +52,6 @@ public class Classroom extends StandardEntity {
 
     public void setSize(Integer size) {
         this.size = size;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
     }
 
     public ClassroomType getType() {

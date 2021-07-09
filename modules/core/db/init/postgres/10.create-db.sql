@@ -48,7 +48,6 @@ create table SCHEDULE_LESSON (
     TIME_ time not null,
     DURATION time not null,
     TEACHER_ID uuid not null,
-    GROUP_ID uuid not null,
     CLASSROOM_ID uuid not null,
     --
     primary key (ID)
@@ -83,9 +82,16 @@ create table SCHEDULE_CLASSROOM (
     DELETED_BY varchar(50),
     --
     TYPE_ integer not null,
-    NUMBER_ integer not null,
+    NUMBER_ varchar(255) not null,
     SIZE_ integer not null,
     --
     primary key (ID)
 )^
 -- end SCHEDULE_CLASSROOM
+-- begin SCHEDULE_LESSON_GROUP_LINK
+create table SCHEDULE_LESSON_GROUP_LINK (
+    LESSON_ID uuid,
+    GROUP_ID uuid,
+    primary key (LESSON_ID, GROUP_ID)
+)^
+-- end SCHEDULE_LESSON_GROUP_LINK

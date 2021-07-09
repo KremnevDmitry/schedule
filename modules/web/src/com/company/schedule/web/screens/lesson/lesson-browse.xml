@@ -11,7 +11,6 @@
                 <property name="teacher" view="_minimal"/>
                 <property name="group" view="_minimal"/>
                 <property name="classroom" view="_minimal"/>
-                <property name="endTime"/>
             </view>
             <loader id="lessonsDl">
                 <query>
@@ -42,7 +41,6 @@
                 <column id="time"/>
                 <column id="duration"/>
                 <column id="teacher"/>
-                <column id="group"/>
                 <column id="classroom"/>
                 <column id="endTime"/>
             </columns>

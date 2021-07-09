@@ -30,8 +30,11 @@ public class Group extends StandardEntity {
     @OnDelete(DeletePolicy.CASCADE)
     private List<Student> students;
 
-    @OneToMany(mappedBy = "group")
+    @JoinTable(name = "SCHEDULE_LESSON_GROUP_LINK",
+            joinColumns = @JoinColumn(name = "GROUP_ID"),
+            inverseJoinColumns = @JoinColumn(name = "LESSON_ID"))
     @OnDelete(DeletePolicy.CASCADE)
+    @ManyToMany
     private List<Lesson> lessons;
 
     public List<Lesson> getLessons() {

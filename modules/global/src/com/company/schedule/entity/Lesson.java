@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Table(name = "SCHEDULE_LESSON")
 @Entity(name = "schedule_Lesson")
@@ -33,17 +34,26 @@ public class Lesson extends StandardEntity {
     @OnDeleteInverse(DeletePolicy.CASCADE)
     private Teacher teacher;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "GROUP_ID")
     @OnDeleteInverse(DeletePolicy.CASCADE)
-    private Group group;
+    @ManyToMany
+    @JoinTable(name = "SCHEDULE_LESSON_GROUP_LINK",
+            joinColumns = @JoinColumn(name = "LESSON_ID"),
+            inverseJoinColumns = @JoinColumn(name = "GROUP_ID"))
+    private List<Group> group;
 
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "CLASSROOM_ID")
     @OnDeleteInverse(DeletePolicy.CASCADE)
     private Classroom classroom;
+
+    public void setGroup(List<Group> group) {
+        this.group = group;
+    }
+
+    public List<Group> getGroup() {
+        return group;
+    }
 
     public LocalTime getDuration() {
         return duration;
@@ -59,14 +69,6 @@ public class Lesson extends StandardEntity {
 
     public void setClassroom(Classroom classroom) {
         this.classroom = classroom;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
     }
 
     public Teacher getTeacher() {
