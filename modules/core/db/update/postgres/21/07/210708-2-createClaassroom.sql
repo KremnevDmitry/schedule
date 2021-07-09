@@ -1,0 +1,1 @@
+create unique index IDX_SCHEDULE_CLAASSROOM_UK_NUMBER_ on SCHEDULE_CLAASSROOM (NUMBER_) where DELETE_TS is null ;

@@ -1,0 +1,1 @@
+create unique index IDX_SCHEDULE_GROUP_UK_GROUP_NUMBER on SCHEDULE_GROUP (GROUP_NUMBER) where DELETE_TS is null ;

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://lessonEdit.caption"
+        focusComponent="form"
+        messagesPack="com.company.schedule.web.screens.lesson">
+    <data>
+        <instance id="lessonDc"
+                  class="com.company.schedule.entity.Lesson">
+            <view extends="_local">
+                <property name="teacher" view="_minimal"/>
+                <property name="group" view="_minimal"/>
+                <property name="classroom" view="_minimal"/>
+                <property name="endTime"/>
+            </view>
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="lessonDc">
+            <column width="350px">
+                <dateField id="dayField" property="day"/>
+                <timeField id="timeField" property="time"/>
+                <timeField id="durationField" property="duration"/>
+                <pickerField id="teacherField" property="teacher">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <pickerField id="groupField" property="group">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <pickerField id="classroomField" property="classroom">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+                <timeField id="endTimeField" property="endTime"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="closeBtn" action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

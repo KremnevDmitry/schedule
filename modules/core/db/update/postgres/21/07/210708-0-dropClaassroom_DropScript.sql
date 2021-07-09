@@ -1,0 +1,1 @@
+drop table if exists SCHEDULE_CLAASSROOM__U12605 cascade ;

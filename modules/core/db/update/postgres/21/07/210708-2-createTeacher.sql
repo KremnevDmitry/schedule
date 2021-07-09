@@ -1,0 +1,1 @@
+create unique index IDX_SCHEDULE_TEACHER_UK_EMAIL on SCHEDULE_TEACHER (EMAIL) where DELETE_TS is null ;

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://lessonBrowse.caption"
+        focusComponent="lessonsTable"
+        messagesPack="com.company.schedule.web.screens.lesson">
+    <data readOnly="true">
+        <collection id="lessonsDc"
+                    class="com.company.schedule.entity.Lesson">
+            <view extends="_local">
+                <property name="teacher" view="_minimal"/>
+                <property name="group" view="_minimal"/>
+                <property name="classroom" view="_minimal"/>
+                <property name="endTime"/>
+            </view>
+            <loader id="lessonsDl">
+                <query>
+                    <![CDATA[select e from schedule_Lesson e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="lessonsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="lessonsTable"
+                dataLoader="lessonsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="lessonsTable"
+                    width="100%"
+                    dataContainer="lessonsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="day"/>
+                <column id="time"/>
+                <column id="duration"/>
+                <column id="teacher"/>
+                <column id="group"/>
+                <column id="classroom"/>
+                <column id="endTime"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="lessonsTable.create"/>
+                <button id="editBtn" action="lessonsTable.edit"/>
+                <button id="removeBtn" action="lessonsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
