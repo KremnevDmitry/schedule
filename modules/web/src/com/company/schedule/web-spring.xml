@@ -7,5 +7,15 @@
     <context:component-scan base-package="com.company.schedule"/>
     
     <gui:screens base-packages="com.company.schedule.web"/>
+    <bean id="schedule_proxyCreator" class="com.haulmont.cuba.web.sys.remoting.WebRemoteProxyBeanCreator">
+        <property name="serverSelector" ref="cuba_ServerSelector"/>
+        <property name="remoteServices">
+            <map>
+                <entry key="schedule_ClassroomService" value="com.company.schedule.service.ClassroomService"/>
+                <entry key="schedule_TeacherService" value="com.company.schedule.service.TeacherService"/>
+                <entry key="schedule_GroupService" value="com.company.schedule.service.GroupService"/>
+            </map>
+        </property>
+    </bean>
 
 </beans>

@@ -17,6 +17,9 @@
     </data>
     <dialogMode height="600"
                 width="800"/>
+    <facets>
+        <messageDialog id="messagedialog_1" closeOnClickOutside="false" caption="Wrong Data"/>
+    </facets>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="lessonDc">
             <column width="350px">
@@ -54,7 +57,8 @@
             </table>
         </groupBox>
         <hbox id="editActions" spacing="true">
-            <button id="commitAndCloseBtn" action="windowCommitAndClose"/>
+            <button id="checkBtn" caption="Check all and close" stylename="primary"/>
+            <!--<button id="commitAndCloseBtn" action="windowCommitAndClose" visible="false" enable="false"/><!-->
             <button id="closeBtn" action="windowClose"/>
         </hbox>
     </layout>
