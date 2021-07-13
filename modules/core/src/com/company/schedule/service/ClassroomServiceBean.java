@@ -17,13 +17,17 @@ public class ClassroomServiceBean implements ClassroomService {
     private DataManager dataManager;
 
     @Override
-    public boolean isClassroomFree(Classroom classroom, LocalDate day, LocalTime startTime, LocalTime endTime) {
+    public boolean isClassroomFree(Lesson thisLesson,Classroom classroom, LocalDate day, LocalTime startTime, LocalTime endTime) {
         List<Lesson> list = dataManager.load(Lesson.class)
                 .query("select e from schedule_Lesson e where e.day = :day and e.classroom = :classroom")
                 .parameter("day",day)
                 .parameter("classroom",classroom)
+                .view("lesson-view")
                 .list();
         for (Lesson lesson: list){
+            if(thisLesson != null)
+                if (lesson.equals(thisLesson))
+                    continue;
             if ((lesson.getTime().isBefore(endTime) && lesson.getEndTime().isAfter(startTime) ||
                     lesson.getEndTime().isBefore(endTime) && lesson.getEndTime().isAfter(startTime) ||
                     lesson.getEndTime().isBefore(endTime) && lesson.getTime().isAfter(startTime) ||

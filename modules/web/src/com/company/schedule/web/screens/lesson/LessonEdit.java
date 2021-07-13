@@ -41,15 +41,18 @@ public class LessonEdit extends StandardEditor<Lesson> {
     private PickerField<Teacher> teacherField;
     @Inject
     private GroupService groupService;
+    @Inject
+    private InstanceContainer<Lesson> lessonDc;
 
 
     @Subscribe("checkBtn")
     public void onCheckBtnClick(Button.ClickEvent event) {
 
 
+
         //проверка на доступность аудитории
 
-        if (!classroomService.isClassroomFree(classroomField.getValue(), dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
+        if (!classroomService.isClassroomFree(lessonDc.getItemOrNull(),classroomField.getValue(), dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
             messagedialog_1.setMessage("The selected classroom already taken");
             messagedialog_1.show();
             return;
@@ -59,22 +62,30 @@ public class LessonEdit extends StandardEditor<Lesson> {
         if(!classroomService.isAvailableSize(classroomField.getValue(),groupTable.getItems().size())){
             messagedialog_1.setMessage("The selected classroom does not fit number of groups");
             messagedialog_1.show();
+            return;
         }
 
         //проверка на занятость преподавателя
-        if(!teacherService.isFree(teacherField.getValue().getEmail(),dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
+        if(!teacherService.isFree(lessonDc.getItemOrNull(),teacherField.getValue().getEmail(),dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
             messagedialog_1.setMessage("The teacher already busy at this time");
             messagedialog_1.show();
+            return;
         }
 
        ///проверка на занятость групп
         for(Group group:groupTable.getItems().getItems()) {
-            if(!groupService.isFree(group,dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
+            if(!groupService.isFree(lessonDc.getItemOrNull(), group,dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
                 messagedialog_1.setMessage("The group " + group.getGroupNumber() + " already busy at this time");
                 messagedialog_1.show();
+                return;
             }
         }
 
+        if(groupTable.getItems().size() == 0){
+            messagedialog_1.setMessage("You must select at least one group");
+            messagedialog_1.show();
+            return;
+        }
 
         close(StandardOutcome.COMMIT);
     }

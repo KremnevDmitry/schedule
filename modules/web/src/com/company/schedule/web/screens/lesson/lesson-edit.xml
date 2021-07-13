@@ -5,12 +5,7 @@
         messagesPack="com.company.schedule.web.screens.lesson">
     <data>
         <instance id="lessonDc"
-                  class="com.company.schedule.entity.Lesson">
-            <view extends="_local">
-                <property name="teacher" view="_minimal"/>
-                <property name="group" view="_minimal"/>
-                <property name="classroom" view="_minimal"/>
-            </view>
+                  class="com.company.schedule.entity.Lesson" view="lesson-view">
             <loader/>
             <collection id="groupDc" property="group"/>
         </instance>

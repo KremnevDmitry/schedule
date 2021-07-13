@@ -17,13 +17,17 @@ public class GroupServiceBean implements GroupService {
     private DataManager dataManager;
 
     @Override
-    public boolean isFree(Group group, LocalDate day, LocalTime startTime, LocalTime endTime) {
+    public boolean isFree(Lesson thisLesson, Group group, LocalDate day, LocalTime startTime, LocalTime endTime) {
         List<Lesson> list = dataManager.load(Lesson.class)
                 .query("select e from schedule_Lesson e where e.day = :day and e.group = :group")
                 .parameter("day",day)
                 .parameter("group",group)
+                .view("lesson-view")
                 .list();
         for (Lesson lesson: list){
+            if(thisLesson != null)
+                if (lesson.equals(thisLesson))
+                    continue;
             if ((lesson.getTime().isBefore(endTime) && lesson.getEndTime().isAfter(startTime) ||
                     lesson.getEndTime().isBefore(endTime) && lesson.getEndTime().isAfter(startTime) ||
                     lesson.getEndTime().isBefore(endTime) && lesson.getTime().isAfter(startTime) ||

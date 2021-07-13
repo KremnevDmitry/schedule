@@ -42,10 +42,18 @@ public class Lesson extends StandardEntity {
     private List<Group> group;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "CLASSROOM_ID")
     @OnDeleteInverse(DeletePolicy.CASCADE)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "CLASSROOM_ID")
     private Classroom classroom;
+
+    public Classroom getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(Classroom classroom) {
+        this.classroom = classroom;
+    }
 
     public void setGroup(List<Group> group) {
         this.group = group;
@@ -61,14 +69,6 @@ public class Lesson extends StandardEntity {
 
     public void setDuration(LocalTime duration) {
         this.duration = duration;
-    }
-
-    public Classroom getClassroom() {
-        return classroom;
-    }
-
-    public void setClassroom(Classroom classroom) {
-        this.classroom = classroom;
     }
 
     public Teacher getTeacher() {

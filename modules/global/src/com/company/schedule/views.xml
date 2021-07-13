@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
 
+    <view entity="schedule_Lesson" name="lesson-view" extends="_local">
+        <property name="teacher" view="_minimal">
+            <property name="email"/>
+        </property>
+        <property name="group" view="_minimal"/>
+        <property name="classroom" view="_minimal">
+            <property name="size"/>
+        </property>
+    </view>
 </views>
