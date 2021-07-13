@@ -15,6 +15,8 @@ public class TeacherServiceBean implements TeacherService {
 
     @Inject
     private DataManager dataManager;
+    @Inject
+    private TimeIntersectionService timeIntersectionService;
 
     @Override
     public boolean isFree(Lesson thisLesson, String email, LocalDate day, LocalTime startTime, LocalTime endTime) {
@@ -24,16 +26,6 @@ public class TeacherServiceBean implements TeacherService {
                 .parameter("email",email)
                 .view("lesson-view")
                 .list();
-        for (Lesson lesson: list){
-            if(thisLesson != null)
-                if (lesson.equals(thisLesson))
-                    continue;
-            if ((lesson.getTime().isBefore(endTime) && lesson.getEndTime().isAfter(startTime) ||
-                    lesson.getEndTime().isBefore(endTime) && lesson.getEndTime().isAfter(startTime) ||
-                    lesson.getEndTime().isBefore(endTime) && lesson.getTime().isAfter(startTime) ||
-                    lesson.getTime().isBefore(startTime) && lesson.getEndTime().isAfter(endTime)))
-                return false;
-        }
-        return true;
+        return timeIntersectionService.isIntersection(list,thisLesson,startTime,endTime);
     }
 }

@@ -14,6 +14,8 @@
                 <entry key="schedule_ClassroomService" value="com.company.schedule.service.ClassroomService"/>
                 <entry key="schedule_TeacherService" value="com.company.schedule.service.TeacherService"/>
                 <entry key="schedule_GroupService" value="com.company.schedule.service.GroupService"/>
+                <entry key="schedule_TimeIntersectionService"
+                       value="com.company.schedule.service.TimeIntersectionService"/>
             </map>
         </property>
     </bean>
