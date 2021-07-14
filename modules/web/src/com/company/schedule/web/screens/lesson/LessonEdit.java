@@ -15,6 +15,7 @@ import com.company.schedule.entity.Lesson;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 @UiController("schedule_Lesson.edit")
 @UiDescriptor("lesson-edit.xml")
@@ -32,7 +33,7 @@ public class LessonEdit extends StandardEditor<Lesson> {
     @Inject
     private TimeField<LocalTime> endTimeField;
     @Inject
-    private MessageDialogFacet messagedialog_1;
+    private MessageDialogFacet messageDialog;
     @Inject
     private Table<Group> groupTable;
     @Inject
@@ -49,41 +50,39 @@ public class LessonEdit extends StandardEditor<Lesson> {
     public void onCheckBtnClick(Button.ClickEvent event) {
 
 
-
-        //проверка на доступность аудитории
-
-        if (!classroomService.isClassroomFree(lessonDc.getItemOrNull(),classroomField.getValue(), dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
-            messagedialog_1.setMessage("The selected classroom already taken");
-            messagedialog_1.show();
+        if (!classroomService.isClassroomFree(lessonDc.getItemOrNull(),classroomField.getValue(), dayField.getValue(),
+                timeField.getValue(),endTimeField.getValue())){
+            messageDialog.setMessage("The selected classroom already taken");
+            messageDialog.show();
             return;
         }
 
-        //проверка на соответствие размера аудитории
-        if(!classroomService.isAvailableSize(classroomField.getValue(),groupTable.getItems().size())){
-            messagedialog_1.setMessage("The selected classroom does not fit number of groups");
-            messagedialog_1.show();
+        if(!classroomService.isAvailableSize(classroomField.getValue(),
+                Objects.requireNonNull(groupTable.getItems()).size())){
+            messageDialog.setMessage("The selected classroom does not fit number of groups");
+            messageDialog.show();
             return;
         }
 
-        //проверка на занятость преподавателя
-        if(!teacherService.isFree(lessonDc.getItemOrNull(),teacherField.getValue().getEmail(),dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
-            messagedialog_1.setMessage("The teacher already busy at this time");
-            messagedialog_1.show();
+        if(!teacherService.isFree(lessonDc.getItemOrNull(), Objects.requireNonNull(teacherField.getValue()).getEmail(),
+                dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
+            messageDialog.setMessage("The teacher already busy at this time");
+            messageDialog.show();
             return;
         }
 
-       ///проверка на занятость групп
         for(Group group:groupTable.getItems().getItems()) {
-            if(!groupService.isFree(lessonDc.getItemOrNull(), group,dayField.getValue(), timeField.getValue(),endTimeField.getValue())){
-                messagedialog_1.setMessage("The group " + group.getGroupNumber() + " already busy at this time");
-                messagedialog_1.show();
+            if(!groupService.isFree(lessonDc.getItemOrNull(), group,dayField.getValue(),
+                    timeField.getValue(),endTimeField.getValue())){
+                messageDialog.setMessage("The group " + group.getGroupNumber() + " already busy at this time");
+                messageDialog.show();
                 return;
             }
         }
 
         if(groupTable.getItems().size() == 0){
-            messagedialog_1.setMessage("You must select at least one group");
-            messagedialog_1.show();
+            messageDialog.setMessage("You must select at least one group");
+            messageDialog.show();
             return;
         }
 

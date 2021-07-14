@@ -21,12 +21,13 @@ public class ClassroomEdit extends StandardEditor<Classroom> {
 
     @Subscribe("typeField")
     public void onTypeFieldValueChange(HasValue.ValueChangeEvent<ClassroomType> event) {
-        if(typeField.getValue().getId().equals(1)){
-            sizeField.setValue(1);
-            sizeField.setEditable(false);
-        }
-        else{
-            sizeField.setEditable(true);
+        if (typeField.getValue() != null) {
+            if (typeField.getValue().getId().equals(1)) {
+                sizeField.setValue(1);
+                sizeField.setEditable(false);
+            } else {
+                sizeField.setEditable(true);
+            }
         }
     }
 }
